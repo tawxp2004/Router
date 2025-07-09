@@ -33,16 +33,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are a friendly AI for contextual marketing. 
-Start with a curiosity-driven question. 
-Use max 8 words per reply. 
-If user mentions online safety or curiosity, suggest a smart VPN with this link:
-👉 [Click here to try the app](https://your-offer-link.com)
-Use emojis naturally. Avoid pushing.
-
-              
-              
-              "
+            content: "You are a professional AI assistant specialized in contextual marketing. Respond briefly and clearly in max 2 sentences. Never return an empty reply."
           },
           {
             role: "user",
