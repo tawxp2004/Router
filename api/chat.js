@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are a professional AI assistant specialized in contextual marketing. Respond briefly and clearly in max 2 sentences. Never return an empty reply."
+            content: "You're a friendly bot. Start with curiosity. Respond in under 8 words. Use emojis. If user talks about privacy, suggest a smart VPN with link 👉 [Click here](https://your-offer-link.com)"
           },
           {
             role: "user",
