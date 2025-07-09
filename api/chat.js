@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const { message } = req.body;
 
     if (!message) {
-      res.status(400).json({ error: "No message provided" });
+      res.status(400).send("No message provided");
       return;
     }
 
@@ -29,11 +29,11 @@ export default async function handler(req, res) {
         "X-Title": "Your App Title"            // اختياري حسب سياسة OpenRouter
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-7b-instruct", // ✅ نموذج مجاني من شركة Mistral
+        model: "mistralai/mistral-7b-instruct:free", // ✅ نموذج مجاني من شركة Mistral
         messages: [
           {
             role: "system",
-            content: "You are a professional conversational AI specialized in contextual marketing."
+            content: "You are a professional AI assistant specialized in contextual marketing. Respond briefly and clearly in max 2 sentences. Never return an empty reply."
           },
           {
             role: "user",
@@ -43,22 +43,33 @@ export default async function handler(req, res) {
       })
     });
 
-    const data = await response.json();
+    // ✅ التحقق من حالة الاستجابة
+    if (!response.ok) {
+      throw new Error(`OpenRouter returned status ${response.status}`);
+    }
 
+    const data = await response.json();
     console.log("OpenRouter Response:", JSON.stringify(data));
 
     // ✅ التحقق من صحة الرد
     if (!data.choices || !data.choices[0]) {
-      res.status(500).json({ error: "Invalid response from OpenRouter", details: data });
+      res.status(500).send("Invalid response from OpenRouter");
       return;
     }
 
-    // ✅ إرسال الرد إلى المستخدم
-    res.status(200).json({ reply: data.choices[0].message.content });
+    const replyContent = data.choices[0].message.content?.trim();
+
+    if (!replyContent) {
+      res.status(500).send("Empty reply from model");
+      return;
+    }
+
+    // ✅ إرسال الرد إلى المستخدم كنص خام بدون JSON
+    res.status(200).send(replyContent);
 
   } catch (error) {
-    // ✅ التقاط أي خطأ وإرجاع رسالة خطأ عامة
+    // ✅ التقاط أي خطأ وإرجاع رسالة خطأ نصية
     console.error("API error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).send("Internal Server Error");
   }
 }
