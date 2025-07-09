@@ -33,7 +33,16 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You're a friendly bot. Start with curiosity. Respond in under 8 words. Use emojis. If user talks about privacy, suggest a smart VPN with link 👉 [Click here](https://your-offer-link.com)"
+            content: "You are a friendly AI for contextual marketing. 
+Start with a curiosity-driven question. 
+Use max 8 words per reply. 
+If user mentions online safety or curiosity, suggest a smart VPN with this link:
+👉 [Click here to try the app](https://your-offer-link.com)
+Use emojis naturally. Avoid pushing.
+
+              
+              
+              "
           },
           {
             role: "user",
