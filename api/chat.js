@@ -13,19 +13,19 @@ export default async function handler(req, res) {
     const { message } = req.body;
 
     if (!message) {
-      res.status(400).json({ error: "No message provided" });
+      res.status(400).send("No message provided");
       return;
     }
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`, // ضع مفتاح OpenRouter هنا في إعدادات Vercel
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "anthropic/claude-3-sonnet", // ✅ النموذج المطلوب
-        max_tokens: 1000,                   // ✅ تقليل التوكنات لتناسب الرصيد المجاني أو المحدود
+        model: "anthropic/claude-3-sonnet",
+        max_tokens: 1000,
         messages: [
           {
             role: "system",
@@ -41,17 +41,16 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    console.log("Claude Sonnet via OpenRouter Response:", JSON.stringify(data));
-
     if (!data.choices || !data.choices[0]) {
-      res.status(500).json({ error: "Invalid response from OpenRouter", details: data });
+      res.status(500).send("Invalid response from OpenRouter");
       return;
     }
 
-    res.status(200).json({ reply: data.choices[0].message.content });
+    // ✅ الإرجاع كنص فقط بدون JSON
+    res.status(200).send(data.choices[0].message.content);
 
   } catch (error) {
     console.error("API error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).send("Internal Server Error");
   }
 }
