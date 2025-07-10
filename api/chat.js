@@ -29,7 +29,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are a friendly and helpful assistant. Keep your answers clear and professional."
+            content: "You're a friendly AI, Ask curiosity-driven, open questions (max 8 words), If user shows interest in online safety, suggest a smart VPN with emoji and this link:  👉 [Click here](https://your-offer-link.com),No explanations. Just chat."
           },
           {
             role: "user",
