@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "anthropic/claude-3-sonnet",
-        max_tokens: 12,
+        max_tokens: 200,
         messages: [
           {
             role: "system",
