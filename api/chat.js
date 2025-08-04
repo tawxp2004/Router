@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-7b-instruct",
+        model: "anthropic/claude-3-haiku",
         max_tokens: 200,
         messages: [
           {
@@ -66,4 +66,5 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
 
