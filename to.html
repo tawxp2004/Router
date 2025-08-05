@@ -100,11 +100,9 @@
       border-radius: 20px;
       outline: none;
       font-size: 16px;
-      resize: none;
-      overflow-y: auto;
-      max-height: 150px;
-      min-height: 44px;
-      line-height: 20px;
+      height: 44px;            /* ارتفاع ثابت مثل input */
+      resize: none;            /* منع التغيير اليدوي للحجم */
+      overflow-y: hidden;      /* إخفاء التمرير عموديًا */
     }
 
     .chatbot-input button {
@@ -134,7 +132,7 @@
       <div class="message bot">Hey !<br> Just curious: are you here by chance, or were you looking for something specific?</div>
     </div>
     <form id="chat-form" class="chatbot-input">
-      <textarea id="input-message" placeholder="Type your message..." required rows="1"></textarea>
+      <textarea id="input-message" placeholder="Type your message..." required></textarea>
       <button type="submit">📤</button>
     </form>
   </div>
