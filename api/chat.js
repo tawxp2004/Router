@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "anthropic/claude-3-haiku",
-        max_tokens: 200,
+        max_tokens: 1000,
         messages: [
           {
             role: "system",
@@ -67,6 +67,7 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
 
 
 
