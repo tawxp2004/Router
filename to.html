@@ -22,7 +22,7 @@
 
     .chatbot-container {
       width: 100vw;
-      height: 100dvh; /* ✅ الوحدة الحديثة التي تراعي أشرطة الهاتف */
+      height: 100dvh;
       max-width: 100%;
       max-height: 100dvh;
       border-radius: 0;
@@ -93,13 +93,18 @@
       background: #fff;
     }
 
-    .chatbot-input input {
+    .chatbot-input textarea {
       flex: 1;
       padding: 12px;
       border: 1px solid #ddd;
       border-radius: 20px;
       outline: none;
       font-size: 16px;
+      resize: none;
+      overflow-y: auto;
+      max-height: 150px;
+      min-height: 44px;
+      line-height: 20px;
     }
 
     .chatbot-input button {
@@ -129,7 +134,7 @@
       <div class="message bot">Hey !<br> Just curious: are you here by chance, or were you looking for something specific?</div>
     </div>
     <form id="chat-form" class="chatbot-input">
-      <input type="text" id="input-message" placeholder="Type your message..." required>
+      <textarea id="input-message" placeholder="Type your message..." required rows="1"></textarea>
       <button type="submit">📤</button>
     </form>
   </div>
@@ -167,26 +172,36 @@
 
       const botDiv = addMessage('', 'bot');
 
-      const response = await fetch('https://router-sandy.vercel.app/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage })
-      });
+      try {
+        const response = await fetch('https://router-sandy.vercel.app/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userMessage })
+        });
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let botMessage = '';
+        if (!response.ok || !response.body) {
+          throw new Error('Failed to fetch response');
+        }
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        botMessage += decoder.decode(value);
-        botDiv.textContent = botMessage;
-        chatDiv.scrollTop = chatDiv.scrollHeight;
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let botMessage = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          botMessage += decoder.decode(value, { stream: true });
+          botDiv.textContent = botMessage;
+          chatDiv.scrollTop = chatDiv.scrollHeight;
+        }
+
+      } catch (error) {
+        botDiv.textContent = "❌ An error occurred. Please try again.";
+        console.error(error);
+      } finally {
+        input.disabled = false;
+        input.focus();
       }
-
-      input.disabled = false;
-      input.focus();
     });
   </script>
 </body>
