@@ -93,14 +93,18 @@
       background: #fff;
     }
 
-    .chatbot-input input {
-      flex: 1;
+    .chatbot-input textarea {
+     flex: 1;
       padding: 12px;
       border: 1px solid #ddd;
       border-radius: 20px;
       outline: none;
       font-size: 16px;
-    }
+      resize: none;            /* يمنع المستخدم من تغيير الحجم يدوياً */
+      overflow-y: auto;        /* يظهر شريط تمرير عمودي عند الحاجة */
+      max-height: 150px;       /* يوقف التمدد بعد عدد معين من السطور */
+   }
+
 
     .chatbot-input button {
       border: none;
@@ -129,7 +133,7 @@
       <div class="message bot">Hey !<br> Just curious: are you here by chance, or were you looking for something specific?</div>
     </div>
     <form id="chat-form" class="chatbot-input">
-      <input type="text" id="input-message" placeholder="Type your message..." required>
+      <textarea id="input-message" placeholder="Type your message..." required rows="1"></textarea>
       <button type="submit">📤</button>
     </form>
   </div>
@@ -191,3 +195,4 @@
   </script>
 </body>
 </html>
+
