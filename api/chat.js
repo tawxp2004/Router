@@ -46,8 +46,7 @@ Naturally suggest a smart VPN app — not as a sales pitch, but as a logical and
 Be flexible: if the visitor just wants to chat, continue normally, but if they show curiosity, present the VPN app as a smart discovery for their benefit.
 Conclude with an invitation to try the VPN app if curiosity arises, without pressure.
 Include emojis naturally to maintain a friendly and expressive tone.
-When presenting the app, always use a clickable link in this format:
-👉 <a href="https://www.yahoo.com" target="_blank">Click here to try the app</a>.`
+When presenting the app, always provide a clickable link formatted as 👉 <a href="https://www.yahoo.com" target="_blank">Click here to try the app</a>.`
           },
           ...conversationHistory
         ]
@@ -74,6 +73,7 @@ When presenting the app, always use a clickable link in this format:
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
 
 
 
